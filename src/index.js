@@ -3,13 +3,13 @@ import dva from 'dva';
 import 'moment/locale/zh-cn';
 import './g2';
 import './rollbar';
-// import browserHistory from 'history/createBrowserHistory';
+import browserHistory from 'history/createBrowserHistory';
 import './index.less';
 import router from './router';
 
 // 1. Initialize
 const app = dva({
-  // history: browserHistory(),
+  history: browserHistory(),
 });
 
 // 2. Plugins

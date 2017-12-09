@@ -23,6 +23,7 @@ export default {
         type: 'changeSubmitting',
         payload: false,
       });
+      yield put(routerRedux.push('/'));
     },
     *mobileSubmit(_, { call, put }) {
       yield put({
@@ -46,6 +47,7 @@ export default {
           status: false,
         },
       });
+      yield call(outAccountLogin, payload);
       yield put(routerRedux.push('/user/login'));
     },
   },

@@ -36,9 +36,13 @@ export async function addRule(params) {
 export async function fakeSubmitForm(params) {
   return request('/api/forms', {
     method: 'POST',
+    // contentType: 'application/x-www-form-urlencoded',
     body: params,
   });
 }
+
+
+
 
 export async function fakeChartData() {
   return request('/api/fake_chart_data');
@@ -61,9 +65,18 @@ export async function queryFakeList(params) {
 }
 
 export async function fakeAccountLogin(params) {
-  return request('/api/login/account', {
+  return request('/system/user/login.htm', {
     method: 'POST',
     body: params,
+    type:'in',
+  });
+}
+
+export async function outAccountLogin(params) {
+  return request('/system/user/logout.htm', {
+    method: 'POST',
+    body: '',
+    type:'out',
   });
 }
 

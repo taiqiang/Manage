@@ -1,15 +1,17 @@
 import fetch from 'dva/fetch';
 import { notification } from 'antd';
+const Cookie = document.cookie;
+
 
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
     return response;
   }
-  notification.error({
-    message: `请求错误 ${response.status}: ${response.url}`,
-    description: response.statusText,
-  });
-  const error = new Error(response.statusText);
+  // notification.error({
+  //   message: `请求错误 ${response.code}: ${response.msg}`,
+  //   description: response.msg,
+  // });
+  const error = new Error(response.status);
   error.response = response;
   throw error;
 }
@@ -29,7 +31,8 @@ export default function request(url, options) {
   if (newOptions.method === 'POST' || newOptions.method === 'PUT') {
     newOptions.headers = {
       Accept: 'application/json',
-      'Content-Type': 'application/json; charset=utf-8',
+      //   'Content-Type': 'application/x-www-form-urlencoded',
+     'Content-Type': 'application/json; charset=utf-8',
       ...newOptions.headers,
     };
     newOptions.body = JSON.stringify(newOptions.body);
@@ -37,8 +40,37 @@ export default function request(url, options) {
 
   return fetch(url, newOptions)
     .then(checkStatus)
-    .then(response => response.json())
+    .then(response =>response.json()
+    ).then(data=>{
+      console.log(data);
+      console.log(JSON.parse(newOptions.body));
+      if(data.code== 400){
+        if(JSON.parse(newOptions.body).type === 'out'){
+          document.cookie="username="+'';
+          document.cookie="status="+false;
+          return {
+            username: JSON.parse(newOptions.body).username,
+            status: true
+          }
+        }else if(JSON.parse(newOptions.body).type === 'in'){
+          document.cookie="username="+JSON.parse(newOptions.body).username;
+          document.cookie="status="+true;
+          return {
+            username: JSON.parse(newOptions.body).username,
+            status: true
+          }
+        }
+
+      }else{
+        notification.error({
+          message: data.msg,
+          // description: data.code,
+        });
+      }
+    })
     .catch((error) => {
+      console.log('error');
+        console.log(error);
       if (error.code) {
         notification.error({
           message: error.name,

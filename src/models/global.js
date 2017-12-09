@@ -1,4 +1,5 @@
 import { queryNotices } from '../services/api';
+import { routerRedux } from 'dva/router';
 
 export default {
   namespace: 'global',
@@ -67,9 +68,25 @@ export default {
   },
 
   subscriptions: {
-    setup({ history }) {
+    setup({dispatch, history }) {
       // Subscribe history(url) change, trigger `load` action if pathname is `/`
+      // `/` 需要判断用户是否是登录状态，（检测 cookie的存在，判断status的值是true 还是 false）
+      // 其他状态
       return history.listen(({ pathname, search }) => {
+        if(pathname === '/'){
+           let dd = document.cookie.split(';');
+           var obj={};
+           var listdd = dd.filter(item=>{ let items = item.split("=");obj[items[0].trim()] = items[1] });
+           var {status,username} = obj;
+          console.log('sssss');
+          console.log(obj);
+          console.log(status);
+           if(!status || !username){
+             dispatch(routerRedux.push('/user/login'));
+           }else{
+             dispatch(routerRedux.push('/dashboard/analysis'));
+           }
+        }
         if (typeof window.ga !== 'undefined') {
           window.ga('send', 'pageview', pathname + search);
         }
