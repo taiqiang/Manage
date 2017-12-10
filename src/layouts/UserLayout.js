@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link, Route } from 'dva/router';
+import { Link, Route ,Redirect} from 'dva/router';
 import DocumentTitle from 'react-document-title';
 import { Icon } from 'antd';
 import GlobalFooter from '../components/GlobalFooter';
@@ -53,6 +53,7 @@ class UserLayout extends React.PureComponent {
             </div>
             <div className={styles.desc}>Ant Design 是西湖区最具影响力的 Web 设计规范</div>
           </div>
+          <Redirect from="/user" to="/user/login"/>
           {
             getRouteData('UserLayout').map(item =>
               (

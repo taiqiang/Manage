@@ -1,7 +1,7 @@
 import 'babel-polyfill';
 import dva from 'dva';
 import 'moment/locale/zh-cn';
-import './g2';
+// import './g2';
 import './rollbar';
 import browserHistory from 'history/createBrowserHistory';
 import './index.less';

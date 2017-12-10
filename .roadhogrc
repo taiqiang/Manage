@@ -20,15 +20,6 @@
   },
   "ignoreMomentLocale": true,
   "theme": "./src/theme.js",
-  "hash": true,
-   "proxy": {
-              "/modules": {
-                  "target": "http://192.168.12.111:8181",
-                  "secure": false
-              },
-              "/system": {
-                   "target":"http://192.168.12.111:8181",
-                  "secure": false
-              }
-          }
+  "hash": true
+
 }

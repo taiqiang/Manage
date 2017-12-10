@@ -24,10 +24,13 @@ function getRouteData(navData, path) {
 }
 
 function getLayout(navData, path) {
+
   if (!navData.some(item => item.layout === path) ||
     !(navData.filter(item => item.layout === path)[0].children)) {
     return null;
   }
+  //先判断 菜单数据中父级菜单的layout是否等于传入的path
+  //且  当前的父菜单 有子组件的存在
   const route = navData.filter(item => item.layout === path)[0];
   return {
     component: route.component,

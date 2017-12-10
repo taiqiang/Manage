@@ -47,7 +47,7 @@ export default {
           status: false,
         },
       });
-      yield call(outAccountLogin, payload);
+      // yield call(outAccountLogin, payload);
       yield put(routerRedux.push('/user/login'));
     },
   },
